@@ -41,6 +41,7 @@
 #include "HOPSPACK_float.hpp"
 #include "HOPSPACK_Print.hpp"
 #include "HOPSPACK_SystemTimer.hpp"
+#include <algorithm>
 
 HOPSPACK::Conveyor::Conveyor (const ParameterList   &  cParams,
                               const bool               bHasNonlinearConstr,
@@ -386,7 +387,7 @@ HOPSPACK::DataPoint *  HOPSPACK::Conveyor::popNextPoint_
     int  nHiPriority = 9999999;
     for (int  i = 0; i < (int) queueLists.size(); i++)
         if (queueLists[i]->isEmpty() == false)
-            nHiPriority = min (nHiPriority, queueLists[i]->getPriority());
+            nHiPriority = std::min (nHiPriority, queueLists[i]->getPriority());
     if (nHiPriority == 9999999)
         //---- ALL QUEUES ARE EMPTY.
         return( NULL );
@@ -464,7 +465,7 @@ void  HOPSPACK::Conveyor::addCachedPoints_
             int  nHiPriority = 9999999;
             for (int  i = 0; i < (int) queueLists.size(); i++)
                 if (baPopNextFailed[i] == false)
-                    nHiPriority = min (nHiPriority,
+                    nHiPriority = std::min (nHiPriority,
                                        queueLists[i]->getPriority());
             if (nHiPriority == 9999999)
             {

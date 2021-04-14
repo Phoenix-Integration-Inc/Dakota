@@ -82,7 +82,7 @@ public:
         {
         DomainOpsArray<double,InfoT>::initialize(problem->num_real_vars,
                                                  popsize_, xover_rate, m_rate);
-        if ((problem->num_real_vars > 0) && 
+        if ((problem->num_real_vars > size_t()) && 
 	    problem->enforcing_domain_bounds.template as<bool>()) {
            lower = problem->real_lower_bounds;
            upper = problem->real_upper_bounds;
@@ -445,7 +445,7 @@ int DomainOpsRealArray<InfoT>::apply_xover(point_t& parent1, info_t& info1,
                           point_t& parent2, info_t& info2,
                           point_t& child,   info_t& info_c)
 {
-if (this->nvars == 0) return 0;
+if (this->nvars == size_t()) return 0;
 
 switch (this->crossover_type) {
   case REAL_ARRAY_XOVER_BLEND:

@@ -686,12 +686,12 @@ class JEGA_SL_IEDECL Logger {
                 {
                     EDDY_FUNC_DEBUGSCOPE
                     EDDY_TRACESCOPE
-                    if(onFatal = Logger::ABORT)
+                    if(onFatal == Logger::ABORT)
                     {
                         std::cerr << static_cast<const std::string&>(e) << '\n';
                         exit(5);
                     }
-                    if(onFatal = Logger::THROW) throw std::runtime_error(
+                    if(onFatal == Logger::THROW) throw std::runtime_error(
                         "Received a fatal callback with message: " +
                         static_cast<const std::string&>(e)
                         );

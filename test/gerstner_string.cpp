@@ -95,12 +95,12 @@ int main(int argc, char** argv)
     switch (test_fn) {
     case 1:
       fnVal = 0.;
-      for (size_t i=0; i<num_vars; ++i)
+      for (size_t i=0; i<num_vars-1; ++i)
         fnVal += (i%2) ? odd_coeff*exp(-xC[i]*xC[i]) :
                          even_coeff*exp(-xC[i]*xC[i]); break;
     case 2:
       fnVal = 0.;
-      for (size_t i=0; i<num_vars; ++i)
+      for (size_t i=0; i<num_vars-1; ++i)
         if (i%2)
           fnVal +=  odd_coeff*exp(xC[i])
                       + inter_coeff*exp(xC[i]*xC[i-1]);
@@ -109,7 +109,7 @@ int main(int argc, char** argv)
       break;
     case 3: {
       double sum = 0;
-      for (size_t i=0; i<num_vars; ++i)
+      for (size_t i=0; i<num_vars-1; ++i)
         sum -= (i%2) ? odd_coeff*xC[i]*xC[i] : even_coeff*xC[i]*xC[i];
       fnVal = exp(sum); break;
     }

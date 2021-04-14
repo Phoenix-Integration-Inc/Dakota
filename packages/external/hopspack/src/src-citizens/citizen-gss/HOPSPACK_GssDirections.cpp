@@ -38,6 +38,7 @@
 
 #include <stdlib.h>    //-- FOR free()
 #include <iomanip>
+#include <algorithm>
 
 #include "HOPSPACK_common.hpp"
 #ifdef HAVE_CDDLIB
@@ -127,7 +128,7 @@ void GssDirections::computeNewDirections(const GssPoint& newPoint)
   // Update distance vector for new point.
   linConstr.formDistanceVector( x, xDistance );
 
-  double newStep = max(newPoint.getStepLength(), minStep);
+  double newStep = std::max(newPoint.getStepLength(), minStep);
 
   do 
   {
@@ -618,7 +619,7 @@ void GssDirections::addCompassDirections(const Matrix& VlT,
 bool GssDirections::updateConstraintState(double newStep)
 {
   // Ensure epsilon < epsilonMax.
-  double epsilon = min(epsilonMax, newStep);
+  double epsilon = std::min(epsilonMax, newStep);
   // Determine indices of near active constraints wrt epsilon.
   vector< LinConstr::ActiveType > newState;
   linConstr.getActiveIneqIndices(xDistance, epsilon, newState);
@@ -658,9 +659,9 @@ void GssDirections::updateDirectionInfo(double newStep, bool isAppend)
     trueStep.assign(nDirections, -1);
     tag.assign(nDirections, -1);
   }
-  nMaxDirections=max(nMaxDirections, nDirections);
+  nMaxDirections = std::max(nMaxDirections, nDirections);
   // epsilonMin records smallest value of epsilon used so far.
-  epsilonMin = min(epsilonMax, getSmallestStep());
+  epsilonMin = std::min(epsilonMax, getSmallestStep());
 }
 
 double GssDirections::getSmallestStep() const
@@ -669,7 +670,7 @@ double GssDirections::getSmallestStep() const
   for (int i=0; i < step.size(); i++)
   {
     if (step[i] >= stepTolerance)
-      sstep = min(sstep, step[i]);
+      sstep = std::min(sstep, step[i]);
   }
   return sstep;
 }

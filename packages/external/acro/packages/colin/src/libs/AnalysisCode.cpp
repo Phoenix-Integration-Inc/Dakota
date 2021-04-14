@@ -52,8 +52,8 @@ void AnalysisCode::define_filenames(const int id, const int analysis_servers)
    // and broadcast them to other evalComm processors.
    int eval_comm_rank   = ColinGlobals::processor_id();
    bool bcast_flag = (analysis_servers > 1 &&
-                      ((inputFileName.size() == 0) ||
-                       (outputFileName.size() == 0)));
+                      ((inputFileName.size() == size_t()) ||
+                       (outputFileName.size() == size_t())));
 
    if (eval_comm_rank == 0 || !bcast_flag)
    {

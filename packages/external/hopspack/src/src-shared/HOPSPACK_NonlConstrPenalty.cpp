@@ -438,11 +438,19 @@ double  NonlConstrPenalty::computeLinf_ (const Vector &  cEqs,
     double  dNorm = 0.0;
 
     for (int  i = 0; i < cEqs.size(); i++)
-        dNorm = max (dNorm, fabs (cEqs[i]));
+#ifdef  WIN32
+		dNorm = fmax(dNorm, fabs(cEqs[i]));
+#else
+		dNorm = max(dNorm, fabs(cEqs[i]));
+#endif
 
     for (int  i = 0; i < cIneqs.size(); i++)
         if (cIneqs[i] < 0.0)
-            dNorm = max (dNorm, fabs (cIneqs[i]));
+#ifdef  WIN32
+			dNorm = fmax(dNorm, fabs(cIneqs[i]));
+#else
+			dNorm = max(dNorm, fabs(cIneqs[i]));
+#endif
 
     return( _dPenCoef * dNorm );
 }

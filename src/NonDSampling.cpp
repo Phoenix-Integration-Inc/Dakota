@@ -955,7 +955,7 @@ compute_intervals(RealRealPairArray& extreme_fns, const IntResponseMap& samples)
     Real min = DBL_MAX, max = -DBL_MAX;
     for (it=samples.begin(); it!=samples.end(); ++it) {
       Real sample = it->second.function_value(i);
-      if (isfinite(sample)) { // neither NaN nor +/-Inf
+      if (std::isfinite(sample)) { // neither NaN nor +/-Inf
 	if (sample < min) min = sample;
 	if (sample > max) max = sample;
 	++num_samp;
@@ -1142,7 +1142,7 @@ accumulate_mean(const RealMatrix& samples, size_t q,
   size_t s, num_obs = samples.numCols(); Real sample;
   for (s=0; s<num_obs; ++s) {
     sample = samples(q,s);
-    if (isfinite(sample)) { // neither NaN nor +/-Inf
+    if (std::isfinite(sample)) { // neither NaN nor +/-Inf
       sum += sample;
       ++num_samp;
     }
@@ -1163,7 +1163,7 @@ accumulate_moments(const RealMatrix& samples, size_t q,
   Real sample, centered_fn, pow_fn, cm2 = 0., cm3 = 0., cm4 = 0.;
   for (s=0; s<num_obs; ++s) {
     sample = samples(q,s);
-    if (isfinite(sample)) { // neither NaN nor +/-Inf
+    if (std::isfinite(sample)) { // neither NaN nor +/-Inf
       pow_fn  = centered_fn = sample - mean;
       pow_fn *= centered_fn; cm2 += pow_fn; // variance
       pow_fn *= centered_fn; cm3 += pow_fn; // 3rd central moment
@@ -1403,7 +1403,7 @@ void NonDSampling::compute_level_mappings(const IntResponseMap& samples)
       sorted_samples.clear();
       for (s_it=samples.begin(); s_it!=samples.end(); ++s_it) {
         sample = s_it->second.function_value(i);
-	if (isfinite(sample))
+	if (std::isfinite(sample))
 	  { ++num_samp; sorted_samples.insert(sample); }
       }
       // sort in ascending order
@@ -1425,7 +1425,7 @@ void NonDSampling::compute_level_mappings(const IntResponseMap& samples)
       bins.assign(rl_len+1, 0); min = DBL_MAX; max = -DBL_MAX;
       for (s_it=samples.begin(); s_it!=samples.end(); ++s_it) {
 	sample = s_it->second.function_value(i);
-	if (isfinite(sample)) {
+	if (std::isfinite(sample)) {
 	  ++num_samp;
 	  if (pdfOutput) {
 	    if (sample < min) min = sample;
@@ -1710,7 +1710,7 @@ print_wilks_stastics(std::ostream& s) const
       for (n=0, it=allResponses.begin(); n<num_samples; ++n, ++it)
       {
         Real sample = it->second.function_value(fn_index);
-        if (isfinite(sample)) // neither NaN nor +/-Inf
+        if (std::isfinite(sample)) // neither NaN nor +/-Inf
           sorted_resp_subset.insert(sample);
       }
       cit = sorted_resp_subset.begin();

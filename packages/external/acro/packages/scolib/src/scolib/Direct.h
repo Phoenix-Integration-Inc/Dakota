@@ -99,10 +99,10 @@ protected:
   double max_boxsize_ratio;
 
   /// Index (in fevals) of the current best point
-  unsigned int ibest;
+  size_t ibest;
 
   /// Number of real parameters
-  unsigned int dimen;
+  size_t dimen;
 
   /// Number of constraints
   int ncon;

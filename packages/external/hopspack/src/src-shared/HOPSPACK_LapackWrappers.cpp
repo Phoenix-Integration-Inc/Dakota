@@ -42,6 +42,7 @@
 #ifdef HAVE_FORTRAN_COMPILER
   #include "HOPSPACK_f90_config.h"
 #endif
+#include <algorithm>
 
 extern "C"
 {
@@ -335,7 +336,7 @@ bool  LapackWrappers::dgesvd (const char            jobU,
     //---- A DOUBLE PRECISION WORK ARRAY IS REQUIRED WITH
     //---- SIZE >= MAX (3 * MIN(m,n) + MAX(m,n), 5 * MIN(m,n)).
     //---- WORKS BETTER IF SLIGHTLY LARGER; HENCE, DOUBLE THE SIZE.
-    int  nWorkSize = 2 * max (3 * min(m,n) + max(m,n), 5 * min(m,n));
+	int  nWorkSize = 2 * std::max(3 * std::min(m, n) + std::max(m, n), 5 * std::min(m, n));
     double *  daWork = new double[nWorkSize];
 
     int  info = -1;
@@ -389,7 +390,7 @@ bool  LapackWrappers::dgglse (const int             m,
     //---- IF nWorkSize = -1, THEN A WORKSPACE QUERY IS ASSUMED.
     //----
     //---- NOT SURE WHERE THIS HEURISTIC VALUE CAME FROM.
-    int  nWorkSize = max (n*(n + 2), m + n + p);
+    int  nWorkSize = std::max(n*(n + 2), m + n + p);
     double *  daWork = new double[nWorkSize];
 
     int  info = -1;
@@ -453,10 +454,10 @@ bool  LapackWrappers::dgelss (const int             m,
     //---- ALLOWS BETTER PERFORMANCE, SO TWICE AS MUCH IS USED (NO TESTING
     //---- WAS PERFORMED TO OBTAIN THIS).
     //---- IF nWorkSize = -1, THEN A WORKSPACE QUERY IS ASSUMED.
-    int  nWorkSize = 2 * (3 * min (m, n) + max (2 * min (m, n), max (m, n)));
+    int  nWorkSize = 2 * (3 * std::min(m, n) + std::max(2 * std::min(m, n), std::max(m, n)));
     double *  daWork = new double[nWorkSize];
 
-    int       nTmp = min (m, n);
+    int       nTmp = std::min(m, n);
     double *  daS = new double[nTmp];
     double    dRcond = 1.0e-12;
     int       nRank;
@@ -513,7 +514,7 @@ bool  LapackWrappers::dgelqf (const int             m,
     //---- IF nWorkSize = -1, THEN A WORKSPACE QUERY IS ASSUMED.
     //----
     //---- NOT SURE WHERE THIS HEURISTIC VALUE CAME FROM.
-    int  nWorkSize = max (n*(n + 2), m);
+    int  nWorkSize = std::max(n*(n + 2), m);
     double *  daWork = new double[nWorkSize];
 
     int  info = -1;

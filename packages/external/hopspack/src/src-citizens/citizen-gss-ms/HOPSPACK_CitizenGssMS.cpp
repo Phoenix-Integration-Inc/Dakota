@@ -37,6 +37,7 @@
 */
 
 #include <sstream>
+#include <algorithm>
 
 #include "HOPSPACK_common.hpp"
 #include "HOPSPACK_CitizenGssMS.hpp"
@@ -382,7 +383,7 @@ bool  CitizenGssMS::extractParameters_ (ParameterList &  cParams,
         _nMaxSubprobEvals = -1;
     cRemainder.deleteParameter ("Max Subproblem Evaluations");
 
-    _nTotalStartPoints = min (100, _cProbDef.getVarScaling().size() * 5);
+    _nTotalStartPoints = std::min (100, _cProbDef.getVarScaling().size() * 5);
     _nTotalStartPoints
         = cParams.getOrSetParameter ("Total Start Points", _nTotalStartPoints);
     if (_nTotalStartPoints <= 0)

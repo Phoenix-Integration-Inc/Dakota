@@ -52,7 +52,7 @@ public:
 	{
 	DomainOpsArray<int,InfoT>::initialize( problem->num_int_vars, 
                                                popsize_, xover_rate, m_rate);
-        if ((problem->num_int_vars > 0) && 
+        if ((problem->num_int_vars > size_t()) && 
 	    problem->enforcing_domain_bounds.template as<bool>()) {
            lower = problem->int_lower_bounds;
            upper = problem->int_upper_bounds;

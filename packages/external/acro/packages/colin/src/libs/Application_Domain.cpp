@@ -36,7 +36,7 @@ int lexicalCast_MixedIntVars_realPart(const Any& from_, Any& to_)
    ans.data << from.Real();
    ans.source_index.reserve(ans.data.size());
    size_t n = from.Binary().size() + from.Integer().size();
-   for(size_t i = ans.data.size(); i > 0; --i)
+   for(size_t i = ans.data.size(); i > size_t(); --i)
       ans.source_index.push_back(n++);
    return OK;
 }
@@ -48,7 +48,7 @@ int lexicalCast_MixedIntVars_intPart(const Any& from_, Any& to_)
    ans.data << from.Integer();
    ans.source_index.reserve(ans.data.size());
    size_t n = from.Binary().size();
-   for(size_t i = ans.data.size(); i > 0; --i)
+   for(size_t i = ans.data.size(); i > size_t(); --i)
       ans.source_index.push_back(n++);
    return OK;
 }
@@ -102,7 +102,7 @@ int lexicalCast_MixedIntVars_differentiablePart(const Any& from_, Any& to_)
    ans.data << from.Real();
    ans.source_index.reserve(ans.data.size());
    size_t n = from.Binary().size() + from.Integer().size();
-   for(size_t i = ans.data.size(); i > 0; --i)
+   for(size_t i = ans.data.size(); i > size_t(); --i)
       ans.source_index.push_back(n++);
    return OK;
 }

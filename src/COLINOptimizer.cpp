@@ -168,6 +168,28 @@ int cast_from_unsignedint_to_int(const Any& src, Any& dest)
      ? 0 : utilib::Type_Manager::CastWarning::ValueOutOfRange;
 }
 
+/// Cast from int to size_t.
+
+int cast_from_int_to_size_t(const Any& src, Any& dest)
+{
+	const int& tmp = src.expose<int>();
+	size_t& ans = dest.set<size_t>();
+	ans = (size_t)tmp;
+	return static_cast<int>(ans) == tmp
+		? 0 : utilib::Type_Manager::CastWarning::ValueOutOfRange;
+}
+
+/// Cast for size_t to int.
+
+int cast_from_size_t_to_int(const Any& src, Any& dest)
+{
+	const size_t& tmp = src.expose<size_t>();
+	int& ans = dest.set<int>();
+	ans = tmp;
+	return static_cast<size_t>(ans) == tmp
+		? 0 : utilib::Type_Manager::CastWarning::ValueOutOfRange;
+}
+
   /// Cast from char const* to std::string.
 
 int cast_from_charconst_to_string(const Any& src, Any& dest)
@@ -200,6 +222,12 @@ bool register_dakota_cast(){
   TypeManager()->register_lexical_cast
     ( typeid(unsigned int), typeid(int), 
       &cast_from_unsignedint_to_int);
+  TypeManager()->register_lexical_cast
+  (typeid(int), typeid(size_t),
+	  &cast_from_int_to_size_t);
+  TypeManager()->register_lexical_cast
+  (typeid(size_t), typeid(int),
+	  &cast_from_size_t_to_int);
   TypeManager()->register_lexical_cast
     ( typeid(char const*), typeid(string), 
       &cast_from_charconst_to_string);
@@ -276,7 +304,7 @@ void COLINOptimizer::core_run()
         .create(iteratedModel.asynch_flag() ? "Concurrent" : "Serial");
      if (colinEvalMgr->has_property("max_concurrency"))
        colinEvalMgr->property("max_concurrency")
-	 = iteratedModel.evaluation_capacity();
+	 = size_t(iteratedModel.evaluation_capacity());
 
      // Instantiate the solver.
 

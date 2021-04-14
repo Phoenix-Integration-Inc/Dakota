@@ -1899,7 +1899,8 @@ JEGAOptimizer::JEGAOptimizer(
         }
 
         JEGA::FrontEnd::Driver::InitializeJEGA(
-            "JEGAGlobal.log", jegaLev, rSeed
+            "JEGAGlobal.log", jegaLev, rSeed,
+            Dakota::abort_mode == Dakota::ABORT_THROWS ? Logger::THROW : Logger::ABORT
             );
     }
 

@@ -39,14 +39,14 @@ int lexical_cast_mixed_to_continuous(const Any& from_, Any& to)
       return 0;
    }
 
-   if ( from->num_int_vars != 0 /*from->get_fixed_int_vars().size()*/ )
+   if ( from->num_int_vars != size_t() /*from->get_fixed_int_vars().size()*/ )
    {
       return utilib::Type_Manager::CastError::InvalidSource;
       //EXCEPTION_MNGR(std::runtime_error, "Cannot lexically cast a "
       //               "Mixed Integer problem to a Continuous problem when "
       //               "integer parameters are not all fixed.");
    }
-   if ( from->num_binary_vars != 0 /*from->get_fixed_binary_vars().size()*/ )
+   if ( from->num_binary_vars != size_t() /*from->get_fixed_binary_vars().size()*/ )
    {
       return utilib::Type_Manager::CastError::InvalidSource;
       //EXCEPTION_MNGR(std::runtime_error, "Cannot lexically cast a "
@@ -70,7 +70,7 @@ int lexical_cast_mixed_to_integer(const Any& from_, Any& to)
 {
    const Problem<FROM>& from = from_.template expose<Problem<FROM> >();
 
-   if ( from->num_real_vars != 0 /*from->get_fixed_int_vars().size()*/ )
+   if ( from->num_real_vars != size_t() /*from->get_fixed_int_vars().size()*/ )
    {
       return utilib::Type_Manager::CastError::InvalidSource;
       //EXCEPTION_MNGR(std::runtime_error, "Cannot lexically cast a "

@@ -37,6 +37,7 @@
 */
 
 #include <iomanip>
+#include <algorithm>
 #include <math.h>      //-- FOR fabs
 
 #include "HOPSPACK_ProblemDef.hpp"
@@ -400,7 +401,7 @@ bool  ProblemDef::isObjTargetReached (const double    dObjValue,
     else
     {
         double  dMag = fabs (_dObjTarget);
-        dMag = max (1.0e-4, dMag);
+        dMag = std::max (1.0e-4, dMag);
         dPercent = 100.0 * (dDiff / dMag);
     }
 

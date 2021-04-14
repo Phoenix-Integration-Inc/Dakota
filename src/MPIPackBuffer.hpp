@@ -151,7 +151,12 @@ inline MPIPackBuffer& operator<< (MPIPackBuffer& buff, const float& data)
 /// insert a bool
 inline MPIPackBuffer& operator<< (MPIPackBuffer& buff, const bool& data)
 { buff.pack(data); return buff; }
-
+/// insert an unsigned long long
+/// NO-OP, we don't use MPI at PHX so everything is a no-op anyways.
+inline MPIPackBuffer& operator<< (MPIPackBuffer& buff, const unsigned long long& data)
+{
+	return buff;
+}
 
 //---------------------------------------------------------------------
 //
@@ -288,7 +293,12 @@ inline MPIUnpackBuffer& operator>> (MPIUnpackBuffer& buff, float& data)
 /// extract a bool
 inline MPIUnpackBuffer& operator>> (MPIUnpackBuffer& buff, bool& data)
 { buff.unpack(data); return buff; }
-
+/// extract an unsigned long long
+/// NO-OP, we don't use MPI at PHX so everything is a no-op anyways.
+inline MPIUnpackBuffer& operator >> (MPIUnpackBuffer& buff, unsigned long long& data)
+{
+	return buff;
+}
 
 /// Read a generic container (vector<T>, list<T>) from MPIUnpackBuffer, s
 //  WJB - ToDo: consider std::set<T> too (currently in data_io.hpp)

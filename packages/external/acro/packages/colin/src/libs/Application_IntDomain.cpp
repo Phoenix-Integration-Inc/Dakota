@@ -132,8 +132,8 @@ Application_IntDomain::Application_IntDomain()
              &domain_size.onChange(), domain_size));
 
    // initialize everything (relying on the callbacks)
-   _num_int_vars = 0;
-   _num_binary_vars = 0;
+   _num_int_vars = size_t();
+   _num_binary_vars = size_t();
 }
 
 /// Virtual destructor
@@ -263,7 +263,7 @@ Application_IntDomain::finiteBoundConstraints() const
    const int_domain_t &ub = int_upper_bounds.expose<int_domain_t>();
    const BoundTypeArray &lbt = int_lower_bound_types.expose<BoundTypeArray>();
    const BoundTypeArray &ubt = int_upper_bound_types.expose<BoundTypeArray>();
-   for (size_t i = 0; i < numv; i++)
+   for (size_t i = size_t(); i < numv; i++)
    {
       if ( lbt[i] == no_bound || ubt[i] == no_bound )
          return false;
@@ -625,7 +625,7 @@ cb_print(std::ostream& os)
 {
    os << "Integer variables: " << num_int_vars << std::endl;
 
-   if ( num_int_vars > 0 )
+   if ( num_int_vars > size_t() )
    {
       const labels_t &labels = int_labels.expose<labels_t>();
       
@@ -637,7 +637,7 @@ cb_print(std::ostream& os)
          //<< "Fixed Val" << std::setw(20)
          << "Lower Bound T" << std::setw(20) 
          << "Upper Bound T" << std::endl;
-      for (size_t i = 0; num_int_vars > i; i++)
+      for (size_t i = size_t(); num_int_vars > i; i++)
       {
          //
          // Index
@@ -694,7 +694,7 @@ cb_print(std::ostream& os)
    }
 
    os << "Binary variables:  " << num_binary_vars << std::endl;
-   if ( num_binary_vars > 0 )
+   if ( num_binary_vars > size_t() )
    {
       const labels_t &labels = binary_labels.expose<labels_t>();
       
@@ -705,7 +705,7 @@ cb_print(std::ostream& os)
          << "Label" << std::setw(20) 
          //<< "Fixed Val" 
          << std::endl;
-      for (size_t i = 0; num_binary_vars > i; i++)
+      for (size_t i = size_t(); num_binary_vars > i; i++)
       {
          //
          // Index

@@ -20,6 +20,7 @@
 #define pebbl_gRandom_h
 
 #include <acro_config.h>
+#include <utilib/AnyRNG.h>
 #include <utilib/RNG.h>
 #include <utilib/Uniform.h>
 //#include <utilib/paramTable.h>
@@ -29,7 +30,7 @@ namespace pebbl {
 
 utilib::RNG*    gRandomRNG();
 extern utilib::Uniform gRandom;
-extern size_t randomSeed;
+extern utilib::seed_t randomSeed;
 
 // The following commented-out code is the functionality we want.
 // Work around for gcc compiler is below

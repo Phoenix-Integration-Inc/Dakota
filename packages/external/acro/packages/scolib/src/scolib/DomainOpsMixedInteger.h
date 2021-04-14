@@ -208,10 +208,10 @@ protected:
   ///
   bool mutate_independently;
 
-  unsigned int num_binary;
-  unsigned int num_ints;
-  unsigned int num_reals;
-  unsigned int num_vars;
+  size_t num_binary;
+  size_t num_ints;
+  size_t num_reals;
+  size_t num_vars;
 };
 
 

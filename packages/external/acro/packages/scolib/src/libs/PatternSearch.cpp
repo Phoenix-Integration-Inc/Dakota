@@ -337,8 +337,8 @@ if ((problem->numConstraints() > 0) &&
 */
   double SHRINK_BOUND = 8.0;
   
-  unsigned int nvars = problem->num_real_vars;
-  if (nvars == 0) return;
+  size_t nvars = problem->num_real_vars;
+  if (nvars == size_t()) return;
   
   bc_flag = problem->enforcing_domain_bounds;
   if (bc_flag)
@@ -1814,7 +1814,7 @@ switch (basis_id) {
 	// Note: this code does not permit the use of augmented trials!
 	//
 	{
-	unsigned int nvars = problem->num_real_vars;
+	size_t nvars = problem->num_real_vars;
 	unsigned int alt = (id < nvars ? id+nvars : id-nvars);
 
 	for (unsigned int j=0; j<ntrials; j++) {

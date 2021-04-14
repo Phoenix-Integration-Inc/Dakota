@@ -70,7 +70,7 @@ EvaluationManager_Base::solverID_t
 EvaluationManager_Base::reference_solver(solverID_t existing)
 {
    map<solverID_t, size_t>::iterator it;
-   if (existing != 0)
+   if (existing != size_t())
    {
       it = solver_refCount.find(existing);
       if (it == solver_refCount.end())
@@ -100,7 +100,7 @@ EvaluationManager_Base::release_solver(solverID_t solver_id)
       EXCEPTION_MNGR(std::runtime_error, "EvaluationManager_Base::"
                      "release_solver(): invalid existing solverID.");
    }
-   if ( --(it->second) == 0 )
+   if ( --(it->second) == size_t())
    {
       queue_mngr.release_solver_queue(solver_id);
       solver_refCount.erase(it);
@@ -164,14 +164,14 @@ request_check_cache( bool force_recalc,
    AppRequest::request_map_t::iterator q_it = cqi.requests.begin();
    AppRequest::request_map_t::iterator q_itEnd = cqi.requests.end();
    Cache::iterator best_match = cache_itEnd;
-   pair<size_t, size_t> best_match_count = std::make_pair(0,0);
+   pair<size_t, size_t> best_match_count = std::make_pair(size_t(), size_t());
    while ( cache_it != cache_itEnd && cache_it->first.key == key )
    {
       // Find the best match to this request from the list of responses
       r_it = cache_it->second.responses.begin();
       r_itEnd = cache_it->second.responses.end();
       q_it = cqi.requests.begin();
-      pair<size_t, size_t> match_count = std::make_pair(0,0);
+      pair<size_t, size_t> match_count = std::make_pair(size_t(), size_t());
       while(( r_it != r_itEnd ) && ( q_it != q_itEnd ))
       {
          if ( r_it->first < q_it->first )
@@ -255,7 +255,7 @@ EvaluationID EvaluationManager::find_first_improving(AppResponse& ans,
       queueID_t queue_id) const
 {
    std::map<queueID_t, double> old_alloc;
-   if (queue_id != 0)
+   if (queue_id != size_t())
    {
       // temporarily reset the queue priority so that we get the responses
       // we want back asap.

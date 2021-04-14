@@ -166,7 +166,7 @@ Application_NonD_Constraints::Application_NonD_Constraints()
              &num_constraints.onChange(), num_constraints));
 
    // initialize everything (relying on the callbacks)
-   _num_nondeterministic_constraints = 0;
+   _num_nondeterministic_constraints = size_t();
 }
 
 
@@ -436,7 +436,7 @@ cb_map_request( const AppRequest::request_map_t &outer_requests,
 
    // If there are no nondeterministic constraints to calculate, we want to
    // (silently) create a 0-length vector.
-   if ( num_nondeterministic_constraints == 0 )
+   if ( num_nondeterministic_constraints == size_t() )
       inner_requests.erase(ndcf_info);
 }
 
@@ -455,7 +455,7 @@ cb_map_response( const utilib::Any &domain,
 
    if ( outer_request.count(ndcf_info) && ! response.count(ndcf_info) )
    {
-      if ( num_nondeterministic_constraints != 0 )
+      if ( num_nondeterministic_constraints != size_t() )
          return count;
 
       Any ans;
@@ -763,7 +763,7 @@ cb_map_request( const AppRequest::request_map_t &outer_requests,
 
    // If there are no nondeterministic constraints to calculate, we want to
    // (silently) create a 0-length vector.
-   if ( num_nondeterministic_constraints == 0 )
+   if ( num_nondeterministic_constraints == size_t() )
       inner_requests.erase(ndcg_info);
 }
 
@@ -781,7 +781,7 @@ cb_map_response( const utilib::Any &domain,
 
    if ( outer_request.count(ndcg_info) && ! response.count(ndcg_info) )
    {
-      if ( num_nondeterministic_constraints != 0 )
+      if ( num_nondeterministic_constraints != size_t() )
          return count;
 
       Any ans;

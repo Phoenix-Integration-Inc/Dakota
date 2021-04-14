@@ -162,7 +162,7 @@ Application_LinearConstraints::Application_LinearConstraints()
              &num_constraints.onChange(), num_constraints));
 
    // initialize everything (relying on the callbacks)
-   _num_linear_constraints = 0;
+   _num_linear_constraints = size_t();
 }
 
 
@@ -482,7 +482,7 @@ cb_map_request( const AppRequest::request_map_t &outer_requests,
    // underlying application to calculate it.  We will do that
    // ourselves.  Also, if there are no linear constraints to calculate,
    // we want to (silently) create a 0-length vector.
-   if ( num_linear_constraints == 0 || 
+   if ( num_linear_constraints == size_t() || 
         ( properties.exists("linear_constraint_matrix") &&
           ( properties["linear_constraint_matrix"].expose<matrix_t>().
             get_ncols() != 0 ) ) )
@@ -507,7 +507,7 @@ cb_map_response( const utilib::Any &domain,
            ( properties["linear_constraint_matrix"].expose<matrix_t>().
              get_ncols() != 0 ) )
          response.insert(make_pair(lcf_info, compute_lcf(domain)));
-      else if ( num_linear_constraints == 0 )
+      else if ( num_linear_constraints == size_t() )
       {
          Any ans;
          ans.set<std::vector<real> >();
@@ -881,7 +881,7 @@ cb_map_request( const AppRequest::request_map_t &outer_requests,
    // If there are no linear constraints to calculate, we want to
    // (silently) create a 0-length vector; if we have a local matrix, we
    // will calculate the lcg_info ourselves...
-   if ( num_linear_constraints == 0 || 
+   if ( num_linear_constraints == size_t() || 
         _linear_constraint_matrix.expose<matrix_t>().get_ncols() != 0 )
       inner_requests.erase(lcg_info);
 }
@@ -901,7 +901,7 @@ cb_map_response( const utilib::Any &domain,
    if ( outer_request.count(lcg_info) && ! response.count(lcg_info) )
    {
       Any ans;
-      if ( num_linear_constraints == 0 )
+      if ( num_linear_constraints == size_t() )
          ans.set<grad_t>();
       else if ( linear_constraint_matrix.expose<matrix_t>().get_ncols() != 0 )
       {

@@ -99,7 +99,7 @@ protected:
   double mutation_allele_rate;
 
   ///
-  unsigned int nvars;
+  size_t nvars;
 
   ///
   unsigned int popsize;

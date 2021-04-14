@@ -25,7 +25,7 @@ using utilib::ParameterNonnegative;
 
 // this refers to the global random number seed, which is 
 // currently declared in pebbl/gRandom.h. 
-extern size_t randomSeed;
+extern unsigned int randomSeed;
 
 pebblParams::pebblParams()
   : statusPrintCount(100000),

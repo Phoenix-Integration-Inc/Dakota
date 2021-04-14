@@ -157,8 +157,8 @@ if (!rng)
 unif_dev.generator(&rng);
 normal_dev.generator(&rng);
 
-unsigned int n = problem->num_real_vars;
-if ((Sigma.size() != 0) && (Sigma.size() != n))
+size_t n = problem->num_real_vars;
+if ((Sigma.size() != size_t()) && (Sigma.size() != n))
    EXCEPTION_MNGR(runtime_error,"SolisWets::reset - Scale vector length " << Sigma.size() << " is \n\t  not equal to num_real_vars: " << n);
 Sigma.resize(n);
 bool bc_flag = problem->enforcing_domain_bounds;
@@ -233,7 +233,7 @@ if (problem->num_real_vars != initial_point.size())
                   problem->num_real_vars << 
                   " real params, but initial point has " << 
                   initial_point.size() );
-if (initial_point.size() == 0) {
+if (initial_point.size() == size_t()) {
    solver_status.termination_info = "No-Real-Params";
    return;
    }

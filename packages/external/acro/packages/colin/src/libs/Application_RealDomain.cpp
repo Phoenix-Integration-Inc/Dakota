@@ -113,7 +113,7 @@ Application_RealDomain::Application_RealDomain()
 
 
    // initialize everything (relying on the callbacks)
-   _num_real_vars = 0;
+   _num_real_vars = size_t();
 }
 
 
@@ -553,7 +553,7 @@ Application_RealDomain::
 cb_print(std::ostream& os)
 {
    os << "Real variables:    " << num_real_vars << std::endl;
-   if (num_real_vars == 0) return;
+   if (num_real_vars == size_t()) return;
 
    const labels_t &labels = real_labels.expose<labels_t>();
 
@@ -614,7 +614,7 @@ void
 Application_RealDomain::
 cb_initialize(TiXmlElement* elt)
 {
-   size_t size = 0;
+   size_t size = size_t();
    utilib::get_num_attribute(elt, "num", size);
    _num_real_vars = size;
 

@@ -38,6 +38,7 @@
 
 #include <iomanip>
 #include <sstream>
+#include <algorithm>
 
 #include "HOPSPACK_common.hpp"
 #include "HOPSPACK_CitizenGssNlc.hpp"
@@ -170,9 +171,9 @@ void  CitizenGssNlc::preProcess (void)
     int  nEvalsCap = _nMaxSubprobEvals;
     if (_nMaxGssNlcEvals != -1)
     {
-        nEvalsCap = max (_nMaxGssNlcEvals - _nTotalEvals, 0);
+        nEvalsCap = std::max (_nMaxGssNlcEvals - _nTotalEvals, 0);
         if (_nMaxSubprobEvals != -1)
-            nEvalsCap = min (nEvalsCap, _nMaxSubprobEvals);
+            nEvalsCap = std::min (nEvalsCap, _nMaxSubprobEvals);
     }
     _pChildParams->setParameter ("Maximum Evaluations", nEvalsCap);
 
@@ -389,7 +390,7 @@ void  CitizenGssNlc::callbackFromChild (const int          nIdNumber,
     updatePenalty_ (cFinalPoint);
 
     //---- UPDATE THE SUBPROBLEM STEP TOLERANCE.
-    _dCurrentStepTol = max (_dCurrentStepTol * _dStepTolDecrease,
+    _dCurrentStepTol = std::max (_dCurrentStepTol * _dStepTolDecrease,
                             _dFinalStepTol);
 
     //---- PREPARE FOR THE NEXT SUBPROBLEM.
@@ -403,9 +404,9 @@ void  CitizenGssNlc::callbackFromChild (const int          nIdNumber,
     int  nEvalsCap = _nMaxSubprobEvals;
     if (_nMaxGssNlcEvals != -1)
     {
-        nEvalsCap = max (_nMaxGssNlcEvals - _nTotalEvals, 0);
+        nEvalsCap = std::max (_nMaxGssNlcEvals - _nTotalEvals, 0);
         if (_nMaxSubprobEvals != -1)
-            nEvalsCap = min (nEvalsCap, _nMaxSubprobEvals);
+            nEvalsCap = std::min (nEvalsCap, _nMaxSubprobEvals);
     }
     _pChildParams->setParameter ("Maximum Evaluations", nEvalsCap);
 
@@ -717,10 +718,10 @@ void  CitizenGssNlc::updatePenalty_ (const DataPoint &  cSubprobSolution)
     //---- DECIDE WHETHER TO INCREASE THE PENALTY PARAMETER.
     double  dThresh1 = _cProbDef.getNonlinearActiveTol();
     double  dThresh2 = _cPenalty.getSmoothing() * ((double) _nM) / 5.0;
-    if (cSubprobSolution.getNonlConstrLInfNorm() > max (dThresh1, dThresh2))
+    if (cSubprobSolution.getNonlConstrLInfNorm() > std::max (dThresh1, dThresh2))
     {
         double  dPenCoef = _cPenalty.getCoefficient();
-        dPenCoef = min (_dPenaltyIncrease * dPenCoef, _dMaxPenalty);
+        dPenCoef = std::min (_dPenaltyIncrease * dPenCoef, _dMaxPenalty);
         _cPenalty.updateCoefficient (dPenCoef);
     }
 
@@ -728,7 +729,7 @@ void  CitizenGssNlc::updatePenalty_ (const DataPoint &  cSubprobSolution)
     double  dSmoothing = _cPenalty.getSmoothing();
     if (dSmoothing > 0.0)
     {
-        double  dNew = max (dSmoothing * _dSmoothingDecrease, _dMinSmoothing);
+        double  dNew = std::max (dSmoothing * _dSmoothingDecrease, _dMinSmoothing);
         _cPenalty.updateSmoothing (dNew);
     }
 

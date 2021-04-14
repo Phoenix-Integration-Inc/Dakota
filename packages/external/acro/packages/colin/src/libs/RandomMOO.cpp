@@ -77,7 +77,7 @@ void RandomMOO::optimize()
    // Misc initialization of the optimizer
    //
    //opt_init();
-   if (problem->num_real_vars == 0)
+   if (problem->num_real_vars == size_t())
    {
       solver_status.termination_info = "No-Real-Params";
       return;

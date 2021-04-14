@@ -56,7 +56,7 @@ public:
   DomainOpsArray();
 
   ///
-  void initialize(unsigned int nvars_, unsigned int popsize_, double xover_rate_, double m_rate_)
+  void initialize(size_t nvars_, unsigned int popsize_, double xover_rate_, double m_rate_)
 	{
 	nvars = nvars_;
 	popsize = popsize_;
@@ -107,7 +107,7 @@ protected:
   double mutation_allele_rate;
 
   ///
-  unsigned int nvars;
+  size_t nvars;
 
   ///
   unsigned int popsize;

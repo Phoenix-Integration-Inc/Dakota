@@ -383,7 +383,7 @@ void
 ConcreteCache::
 set_key_generator(utilib::SharedPtr<Cache::KeyGenerator> new_keygen)
 {
-   if ( size() > 0 )
+   if ( size() > size_t())
    {
       cerr << "WARNING: setting key generator for a non-empty cache results "
          "in loss of data." << endl;

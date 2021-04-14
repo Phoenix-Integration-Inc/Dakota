@@ -77,7 +77,7 @@ Application_MultiObjective::Application_MultiObjective()
 
    // we set the number of objectives here so the callback syncs the
    // sense dimensionality
-   _num_objectives = 0;
+   _num_objectives = size_t();
 
    print_signal.connect
       (11, boost::bind(&Application_MultiObjective::cb_print, this, _1));

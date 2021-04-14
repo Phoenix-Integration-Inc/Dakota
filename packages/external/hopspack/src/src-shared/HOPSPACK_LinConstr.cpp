@@ -38,6 +38,7 @@
 
 #include <iomanip>
 #include <math.h>     //-- FOR fabs
+#include <algorithm>
 
 #include "HOPSPACK_common.hpp"
 #include "HOPSPACK_LinConstr.hpp"
@@ -594,7 +595,7 @@ double  LinConstr::maxStep(const Vector& x,
       case VIOLATED:    // Or violated
         return 0;
       case INACTIVE:
-        maxStep = min(maxStep, (bLower[i] - x[i]) / d[i]);
+        maxStep = std::min(maxStep, (bLower[i] - x[i]) / d[i]);
         break;
       case DNE:         // This means there is no lower bound
         break;
@@ -607,7 +608,7 @@ double  LinConstr::maxStep(const Vector& x,
       case VIOLATED:    // Or violated
         return 0;
       case INACTIVE:
-        maxStep = min(maxStep, (bUpper[i] - x[i]) / d[i]);
+        maxStep = std::min(maxStep, (bUpper[i] - x[i]) / d[i]);
         break;
       case DNE:         // This means there is no upper bound
         break;
@@ -638,7 +639,11 @@ double  LinConstr::maxStep(const Vector& x,
         case VIOLATED:   // Or violated
           return 0;
         case INACTIVE:
-          maxStep = min(maxStep, (bIneqLower[j] - aix[j]) / aid[j]);
+#ifdef  WIN32
+			maxStep = fmin(maxStep, (bIneqLower[j] - aix[j]) / aid[j]);
+#else
+			maxStep = min(maxStep, (bIneqLower[j] - aix[j]) / aid[j]);
+#endif
           break;
         case DNE:        // This means there is no lower bound
           break;
@@ -651,7 +656,11 @@ double  LinConstr::maxStep(const Vector& x,
         case VIOLATED:   // Or violated
           return 0;
         case INACTIVE:
-          maxStep = min(maxStep, (bIneqUpper[j] - aix[j]) / aid[j]);
+#ifdef  WIN32
+			maxStep = fmin(maxStep, (bIneqUpper[j] - aix[j]) / aid[j]);
+#else
+			maxStep = min(maxStep, (bIneqUpper[j] - aix[j]) / aid[j]);
+#endif
           break;
         case DNE:        // This means there is no upper bound
           break;
@@ -1009,7 +1018,11 @@ LinConstr::StateType  LinConstr::getIneqState
   double  xnorm = xTilde.norm();
 
   // Check if the constraint is epsilon-active
-  if ( fabs(z - b) < (_dActiveTol * max (anorm, xnorm)) )
+#ifdef  WIN32
+  if (fabs(z - b) < (_dActiveTol * fmax(anorm, xnorm)))
+#else
+  if (fabs(z - b) < (_dActiveTol * max(anorm, xnorm)))
+#endif
     return ACTIVE;
 
   // Check if the constraint is otherwise satisfied
@@ -1020,9 +1033,15 @@ LinConstr::StateType  LinConstr::getIneqState
   // Otherwise, it must be violated.
   if (bPrintViolationInfo)
   {
-      cout << "     Inequality[" << i << "] violated by " << fabs(z - b)
-           << " (tolerance = " << (_dActiveTol * max (anorm, xnorm)) << ")"
-           << endl;
+#ifdef  WIN32
+	  cout << "     Inequality[" << i << "] violated by " << fabs(z - b)
+		  << " (tolerance = " << (_dActiveTol * fmax(anorm, xnorm)) << ")"
+		  << endl;
+#else
+	  cout << "     Inequality[" << i << "] violated by " << fabs(z - b)
+		  << " (tolerance = " << (_dActiveTol * max(anorm, xnorm)) << ")"
+		  << endl;
+#endif
   }
   return VIOLATED;
 }
@@ -1045,15 +1064,25 @@ LinConstr::StateType  LinConstr::getEqState
   z = xTilde.dot(a);
   double  xnorm = xTilde.norm();
   // Check if the constraint is epsilon-active
-  if ( fabs(z - b) < (_dActiveTol * max (anorm, xnorm)) )
+#ifdef  WIN32
+  if (fabs(z - b) < (_dActiveTol * fmax(anorm, xnorm)))
+#else
+  if (fabs(z - b) < (_dActiveTol * max(anorm, xnorm)))
+#endif
     return ACTIVE;
 
   // Otherwise, it must be violated.
   if (bPrintViolationInfo)
   {
-      cout << "     Equality[" << i << "] violated by " << fabs(z - b)
-           << " (tolerance = " << (_dActiveTol * max (anorm, xnorm)) << ")"
-           << endl;
+#ifdef  WIN32
+	  cout << "     Equality[" << i << "] violated by " << fabs(z - b)
+		  << " (tolerance = " << (_dActiveTol * fmax(anorm, xnorm)) << ")"
+		  << endl;
+#else
+	  cout << "     Equality[" << i << "] violated by " << fabs(z - b)
+		  << " (tolerance = " << (_dActiveTol * max(anorm, xnorm)) << ")"
+		  << endl;
+#endif
   }
   return VIOLATED;
 }
